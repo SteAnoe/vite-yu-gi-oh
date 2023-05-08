@@ -18,8 +18,9 @@ export default{
 <template>
     <main>
         <div id="select" class="container">
-            <select name="" id="">
-                <option value="alien">Alien</option>
+            <select name="" v-model="store.selectValue" @click.prevent="$emit('selectEmit')">
+                <option value="" disabled>--Cerca per Archetipo--</option>
+                <option :value="elem.archetype_name" v-for="(elem, index) in store.archetypeArray" :key="index">{{ elem.archetype_name }}</option>
             </select>
         </div>
         

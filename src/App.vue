@@ -16,18 +16,30 @@ export default{
     }
   },
   created(){
-    this.apiCall()
+    this.apiCall
+    this.archetypeCall()
   },
-  methods: {
+  computed:{
     apiCall(){
-      axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=Alien')
+      if ( store.selectValue !== ''){
+        axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=${store.selectValue}`)
         .then( (res) =>{
-          
           const apiData = res.data.data
           this.store.arrayCarte = apiData
-          console.log(apiData)
         })
+      }else {
+        
+      }
     }
+  },
+  methods: {
+    archetypeCall(){
+      axios.get('https://db.ygoprodeck.com/api/v7/archetypes.php')
+       .then( (res) =>{
+        this.store.archetypeArray = res.data
+       })
+    },
+    
   }
 }
 
@@ -35,7 +47,7 @@ export default{
 
 <template>
   <Header/> 
-  <Main/>
+  <Main @selectEmit="apiCall"/>
 </template>
 
 <style lang="scss">
